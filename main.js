@@ -20,9 +20,9 @@ let carrito = []
 // Recuperar desde localStorage
 const crearProducto = (event) => { 
   const button = event.target
-  const item = button.closest('.card')
-  const nombreProducto = item.querySelector('.card-title').textContent;
-  const precioProducto = item.querySelector('.card-text').textContent;
+  const item = button.closest('.products-container')
+  const nombreProducto = item.querySelector('.product-title').textContent;
+  const precioProducto = item.querySelector('.prodcut-price').textContent;
   const idProducto = event.target.getAttribute('id')
 
   const nuevoProducto = {
@@ -40,13 +40,13 @@ const crearProducto = (event) => {
 const cargarProductos = () => {
   base.forEach(item => {
       const divPrincipal = document.createElement('div')
-      divPrincipal.classList.add('card', 'col-6')
+      divPrincipal.classList.add('products-container', 'my-3', 'col-4')
       divPrincipal.innerHTML = `
-      <img src="${item.imagen}" class="card-img-top" alt="${item.nombre}">
-      <div class="card-body">
-        <h5 class="card-title">${item.nombre}</h5>
-        <p class="card-text">${item.precio}</p>
-        <button class="btn btn-primary" id="${item.id}">agregar</button>
+      <img src="${item.imagen}" class="img-fluid" alt="${item.nombre}">
+      <div class="card-body shadow-lg">
+        <h5 class="product-title">${item.nombre}</h5>
+        <p class="prodcut-price">${item.precio}</p>
+        <button class="btn btn-primary float-end" id="${item.id}">agregar</button>
       </div>
       `
       listado.appendChild(divPrincipal)
@@ -92,6 +92,8 @@ const mostrarCarrito = () => {
     tr.innerHTML = contenidoTabla;
     tablaPedido.append(tr)
 
+    console.log(item.cantidad)
+
     tr.querySelector(".borrar").addEventListener('click', eliminarProducto)
     tr.querySelector(".inputCantidad").addEventListener('change', cantidadProductos)
   })
@@ -123,6 +125,8 @@ const cantidadProductos = (event) => {
     if(item.title === title ){
       sumarInput.value < 1 ?  (sumarInput.value = 1) : sumarInput.value;
       item.cantidad = sumarInput.value;
+
+      console.log(item.cantidad)
       valorTotal()
     }
   })
@@ -151,18 +155,22 @@ $(document).ready(function() {
 
   $('.alert').hide()
 
-  $('.btn-primary').click( function() {
-    console.log('añadiste un producto')
-    $('.alert-success').fadeIn('300')
-    $('.alert-success').delay(1000).fadeOut(800)
+  // $('.btn-primary').click( function() {
+  //   console.log('añadiste un producto')
+  //   $('.alert-success').fadeIn('300')
+  //   $('.alert-success').delay(1000).fadeOut(800)
 
-  })
+  // })
 
-  $('.btn-danger').click( function() {
-    console.log('eliminaste un producto')
-    $('.alert-warning').fadeIn('300')
-    $('.alert-warning').delay(1000).fadeOut(800)
+  // $('.btn-danger').click( function() {
+  //   console.log('eliminaste un producto')
+  //   $('.alert-warning').fadeIn('300')
+  //   $('.alert-warning').delay(1000).fadeOut(800)
 
+  // })
+
+  $('.btn-show').click( () => {
+    $('.carro').toggle()
   })
 
 })
